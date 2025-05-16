@@ -1,5 +1,4 @@
 using ConnectDbWithDotEnv.EntityFramework;
-using ConnectDbWithDotEnv.Model;
 using ConnectDbWithDotEnv.Repositories.Interfaces;
 using ConnectDbWithDotEnv.Repositories.Repositories;
 using ConnectDbWithDotEnv.Services;
@@ -21,6 +20,11 @@ public static class ServiceConfigurator
 
     serviceCollection.AddDbContext<Context>();
     
-    serviceCollection.AddScoped<IRepository<Test>, Repository<Test>>();
+    logger.LogInformation("Adding repository...");
+    
+    serviceCollection.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+    serviceCollection.AddScoped<IUserRepository, UserRepository>(); 
+    
+    serviceCollection.AddSingleton<AuthorizationService>();
   }
 }

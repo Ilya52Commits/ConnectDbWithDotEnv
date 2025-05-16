@@ -11,7 +11,7 @@ namespace ConnectDbWithDotEnv.Repositories.Repositories;
 /// <typeparam name="T"></typeparam>
 public class Repository<T>(Context context) : IRepository<T> where T : class
 {
-  private readonly DbSet<T> _dbSet = context.Set<T>();
+  protected readonly DbSet<T> _dbSet = context.Set<T>();
 
   public async Task<IEnumerable<T>> GetAllAsync()
   {
@@ -22,7 +22,7 @@ public class Repository<T>(Context context) : IRepository<T> where T : class
   {
     return await _dbSet.FindAsync(id);
   }
-
+  
   public async Task AddAsync(T item)
   {
     await _dbSet.AddAsync(item);

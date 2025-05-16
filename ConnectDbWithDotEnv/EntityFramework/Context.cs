@@ -1,6 +1,5 @@
-using ConnectDbWithDotEnv.Model;
+using ConnectDbWithDotEnv.EntityFramework.Models;
 using ConnectDbWithDotEnv.Services;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +13,8 @@ public sealed class Context : DbContext
   private readonly EnvironmentVariableService _environmentVariableService;
   private readonly ILogger<Context> _logger;
   
-  public Context(EnvironmentVariableService environmentVariableService, ILogger<Context> logger)
+  
+  public Context(DbContextOptions<Context> options, EnvironmentVariableService environmentVariableService, ILogger<Context> logger):base(options)
   {
     _environmentVariableService = environmentVariableService;
     _logger = logger;
@@ -32,7 +32,7 @@ public sealed class Context : DbContext
         
     _logger.LogInformation("Попытка подключения к SQL Server...");
 
-    using var connection = new SqlConnection(connectionString);
+      /*using var connection = new SqlConnection(connectionString);
     try
     {
       connection.Open();
@@ -43,12 +43,12 @@ public sealed class Context : DbContext
     {
       _logger.LogError(ex, "Ошибка подключения к бд");
       throw; 
-    }
+    }*/
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    var test1 = new Test {Id = 1, Name = "Вывожу какой-то текст"};
+    var test1 = new Test {Id = 1, Login = "seversta\\iaiu.novoselov", FullName = "Новосёлова Яна Юрьевна"};
     modelBuilder.Entity<Test>().HasData(test1);
     base.OnModelCreating(modelBuilder);
   }
