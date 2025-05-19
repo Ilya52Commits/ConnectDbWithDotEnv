@@ -54,26 +54,17 @@ public partial class App
       var logger = loggerFactory.CreateLogger<App>();
     
       logger.LogInformation("Logging setup completed");
-    
+      
+      // Регистрируем все сервисы заранее
       ServiceConfigurator.ConfigureServices(serviceCollection, logger);
-    
-      logger.LogInformation("Adding ErrorViewModel...");
       serviceCollection.AddTransient<ErrorViewModel>();
-      logger.LogInformation("Adding ErrorView...");
       serviceCollection.AddTransient<ErrorView>();
-      logger.LogInformation("Adding TestView...");
       serviceCollection.AddSingleton<TestView>();
-
+      
       var authService = serviceCollection.BuildServiceProvider().GetRequiredService<AuthorizationService>(); 
-      // Подписываемся на событие ErrorMessage
-      authService.ErrorMessage += (errorMessage) =>
-      {
-        // Обновляем свойство ErrorMessage в ErrorViewModel
-        serviceCollection.BuildServiceProvider().GetRequiredService<ErrorViewModel>().ErrorMessage = errorMessage;
-      };
-      var isSuccess = await authService.IsAuthorized();
+      var isAuthorized = await authService.IsAuthorized();
 
-      if (!isSuccess)
+      if (!isAuthorized)
       {
         var errorView = serviceCollection.BuildServiceProvider().GetRequiredService<ErrorView>();
         errorView.Show();
@@ -81,9 +72,7 @@ public partial class App
       else
       {
         var mainWindow = new MainView(serviceCollection.BuildServiceProvider().GetRequiredService<TestView>());
-          
         MainWindow = mainWindow;
-          
         MainWindow.Show();
       }
     }

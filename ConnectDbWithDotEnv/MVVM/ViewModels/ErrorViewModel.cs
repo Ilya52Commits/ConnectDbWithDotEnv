@@ -1,13 +1,14 @@
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using ConnectDbWithDotEnv.EntityFramework.Models;
-using ConnectDbWithDotEnv.Repositories.Interfaces;
+using CommunityToolkit.Mvvm.Input;
+using ConnectDbWithDotEnv.Services;
 
 namespace ConnectDbWithDotEnv.MVVM.ViewModels;
 
-public partial class ErrorViewModel() : ObservableObject
+public partial class ErrorViewModel : ObservableObject
 {
-  [ObservableProperty] private string _errorMessage = string.Empty;
-
-  
+  [RelayCommand]
+  private void NavigateToMainView()
+  {
+    
+  }
 }

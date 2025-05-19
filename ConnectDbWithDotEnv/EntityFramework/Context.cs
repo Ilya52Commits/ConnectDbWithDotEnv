@@ -8,7 +8,7 @@ namespace ConnectDbWithDotEnv.EntityFramework;
 public sealed class Context : DbContext
 {
   // поменять
-  public DbSet<Test> Tests { get; set; }
+  public DbSet<UserLogin> UserLogins { get; set; }
   
   private readonly EnvironmentVariableService _environmentVariableService;
   private readonly ILogger<Context> _logger;
@@ -18,7 +18,6 @@ public sealed class Context : DbContext
   {
     _environmentVariableService = environmentVariableService;
     _logger = logger;
-    Database.EnsureCreated();
   }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,8 +47,7 @@ public sealed class Context : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    var test1 = new Test {Id = 1, Login = "seversta\\iaiu.novoselov", FullName = "Новосёлова Яна Юрьевна"};
-    modelBuilder.Entity<Test>().HasData(test1);
+  
     base.OnModelCreating(modelBuilder);
   }
 }

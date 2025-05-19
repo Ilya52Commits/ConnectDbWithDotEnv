@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConnectDbWithDotEnv.Repositories.Repositories;
 
-public class UserRepository(Context context) : Repository<Test>(context), IUserRepository
+public class UserRepository(Context context) : Repository<UserLogin>(context), IUserRepository
 {
-  public async Task<Test?> GetUserByLoginAsync(string login)
+  public async Task<UserLogin?> GetUserByLoginAsync(string login)
   {
-    return await _dbSet.FirstOrDefaultAsync(user => user.Login == login);
+    return await _dbSet.FirstOrDefaultAsync(user => user.FullLogin == login);
   }
 }

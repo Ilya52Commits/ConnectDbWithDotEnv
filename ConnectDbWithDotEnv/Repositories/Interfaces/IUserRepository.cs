@@ -2,7 +2,7 @@ using ConnectDbWithDotEnv.EntityFramework.Models;
 
 namespace ConnectDbWithDotEnv.Repositories.Interfaces;
 
-public interface IUserRepository : IRepository<Test>
+public interface IUserRepository : IRepository<UserLogin>
 {
-  Task<Test?> GetUserByLoginAsync(string login);
+  Task<UserLogin?> GetUserByLoginAsync(string login);
 }

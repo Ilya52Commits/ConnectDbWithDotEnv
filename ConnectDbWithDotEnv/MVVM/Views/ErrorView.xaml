@@ -3,14 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:ConnectDbWithDotEnv.MVVM.Views"
+        xmlns:viewModel="clr-namespace:ConnectDbWithDotEnv.MVVM.ViewModels"
         mc:Ignorable="d"
         Title="ErrorView" Height="450" Width="800">
+    
+    <Window.DataContext>
+        <viewModel:ErrorViewModel/>
+    </Window.DataContext>
     <StackPanel>
-        <TextBlock Text="{Binding ErrorMessage}" 
+        <TextBlock Text="Неизвестный пользователь" 
                    Foreground="Red"
                    Margin="20"/>
-        <Button Content="Закрыть" 
+        <Button Content="Закрыть" Command="{Binding NavigateToMainViewCommand}"
                 HorizontalAlignment="Center"/>
     </StackPanel>
 </Window>
